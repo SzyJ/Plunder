@@ -1,6 +1,8 @@
 package team18.com.plunder.team18.com.fragments;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +23,7 @@ import team18.com.plunder.R;
  * Created by Szymon Jackiewicz on 2/6/2017.
  */
 
-public class MapFragment  extends Fragment {
+public class MapFragment extends Fragment {
 
     MapView mMapView;
     private GoogleMap googleMap;
@@ -29,6 +31,15 @@ public class MapFragment  extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main_map, container, false);
+
+        FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Re-center on User's location", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
 
         mMapView = (MapView) rootView.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
@@ -46,7 +57,6 @@ public class MapFragment  extends Fragment {
             public void onMapReady(GoogleMap mMap) {
                 googleMap = mMap;
 
-                // For showing a move to my location button
                 //googleMap.setMyLocationEnabled(true);
 
                 // Map functionality
