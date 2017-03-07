@@ -1,5 +1,6 @@
 package team18.com.plunder.team18.com.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import team18.com.plunder.CreateHunt;
 import team18.com.plunder.R;
 
 /**
@@ -27,6 +29,7 @@ public class ManHuntFragment extends android.support.v4.app.Fragment {
             public void onClick(View view) {
                 Snackbar.make(view, "\"Create Hunt\" button!", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                startActivity(new Intent(getActivity(), CreateHunt.class));
             }
         });
 
