@@ -15,6 +15,7 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import team18.com.plunder.R;
@@ -26,20 +27,13 @@ import team18.com.plunder.R;
 public class MapFragment extends Fragment {
 
     MapView mMapView;
-    private GoogleMap googleMap;
+   //private GoogleMap googleMap;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main_map, container, false);
 
-        FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Re-center on User's location", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        final FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
 
         mMapView = (MapView) rootView.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
@@ -54,24 +48,37 @@ public class MapFragment extends Fragment {
 
         mMapView.getMapAsync(new OnMapReadyCallback() {
             @Override
-            public void onMapReady(GoogleMap mMap) {
-                googleMap = mMap;
+            public void onMapReady(final GoogleMap mMap) {
 
                 //googleMap.setMyLocationEnabled(true);
 
                 // Map functionality
-                mMap.setMapType(mMap.MAP_TYPE_HYBRID);
-                mMap.setMinZoomPreference(15f); //20 looks good
+                //mMap.setMinZoomPreference(15f); //20 looks good
                 mMap.setBuildingsEnabled(true);
 
                 // For dropping a marker at a point on the Map
-                LatLng newcastleUniversityCoordinates = new LatLng(54.979177, -1.614806);
+                LatLng newcastleUniversityCoordinates = new LatLng(54.979177, -1.614806); /*
                 mMap.addMarker(new MarkerOptions().position(newcastleUniversityCoordinates).title("Hello World"));
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(newcastleUniversityCoordinates));
+                */
 
                 // For zooming automatically to the location of the marker
-                CameraPosition cameraPosition = new CameraPosition.Builder().target(newcastleUniversityCoordinates).zoom(12).build();
-                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                final CameraPosition cameraPosition = new CameraPosition.Builder().target(newcastleUniversityCoordinates).zoom(15f).build();
+                fab.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Snackbar.make(view, "Re-center on User's location", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                    }
+                });
+
+
+
+                mMap.setMapStyle(
+                        MapStyleOptions.loadRawResourceStyle(getActivity(), R.raw.style_json)
+                );
+
             }
         });
 
