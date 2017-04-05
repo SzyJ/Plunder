@@ -40,8 +40,9 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        //android.app.FragmentManager fragMan = getFragmentManager();
-        //fragMan.beginTransaction().replace(R.id.content_container, new MapFragment()).commit();
+        FragmentManager fragMan = getSupportFragmentManager();
+        fragMan.beginTransaction().replace(R.id.content_container, new MapFragment()).commit();
+        navigationView.getMenu().getItem(1).setChecked(true);
 
     }
 

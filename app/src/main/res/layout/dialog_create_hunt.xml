@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp">
+
+        <AutoCompleteTextView
+            android:id="@+id/hunt_name_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter hunt name"
+            android:inputType="textAutoCorrect"
+            android:cursorVisible="true"
+            android:maxLines="1"
+            android:layout_gravity="center"
+            android:singleLine="true" />
+
+    </android.support.design.widget.TextInputLayout>
+
+</LinearLayout>
