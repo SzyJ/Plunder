@@ -31,8 +31,6 @@ import static com.google.android.gms.location.LocationRequest.create;
 
 public class ManHuntFragment extends android.support.v4.app.Fragment {
 
-    //private FloatingActionButton fab;
-
     @Nullable
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,11 +40,6 @@ public class ManHuntFragment extends android.support.v4.app.Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                /*
-                Snackbar.make(view, "\"Create Hunt\" button!", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                */
-
                 LayoutInflater layInf = LayoutInflater.from(getActivity());
 
                 final View dialogView = layInf.inflate(R.layout.dialog_create_hunt, null);
@@ -82,84 +75,6 @@ public class ManHuntFragment extends android.support.v4.app.Fragment {
 
 
                 builder.show();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                /*
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
-                LayoutInflater inflater = getActivity().getLayoutInflater();
-
-                builder.setView(inflater.inflate(R.layout.dialog_create_hunt, null))
-                    .setPositiveButton("Choose Hunt Waypoints!",
-                        new DialogInterface.OnClickListener() {
-
-                            // Currently initialised to null!!!!
-                            //private final EditText huntNameInput = (EditText) inflater.findViewById(R.id.hunt_name_input);
-                            public void onClick(DialogInterface dialog, int which) {
-                                //String huntName = huntNameInput.getText().toString();
-                                //if (!huntName.isEmpty()) {
-                                    dialog.dismiss();
-                                    Intent intent = new Intent(getActivity(), CreateHunt.class);
-                                    intent.putExtra("hunt_name", "test");
-
-                                    startActivity(intent);
-                                //} else {
-                                    //huntNameInput.setError("Hunt name cannot be empty!");
-                                //}
-                            }
-                        })
-                    .setNegativeButton("Cancel",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        }
-                    );
-
-                builder.create().show();*/
-
-                /*
-                AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
-                alertDialog.setTitle("Create new Hunt!");
-                alertDialog.setMessage("Give your new hunt a name!");
-                alertDialog.setView(huntNameInput);
-                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Choose Hunt Waypoints!",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                String huntName = huntNameInput.getText().toString();
-                                if (!huntName.isEmpty()) {
-                                    dialog.dismiss();
-                                    Intent intent = new Intent(getActivity(), CreateHunt.class);
-                                    intent.putExtra("hunt_name", huntName);
-
-                                    startActivity(intent);
-                                } else {
-                                    huntNameInput.setError("Hunt name cannot be empty!");
-                                }
-                            }
-                        }
-                );
-                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        }
-                );
-
-                alertDialog.show();*/
             }
         });
 

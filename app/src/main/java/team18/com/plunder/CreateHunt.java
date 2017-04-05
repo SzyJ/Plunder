@@ -36,6 +36,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import team18.com.plunder.utils.Hunt;
 import team18.com.plunder.utils.Waypoint;
 
+/**
+ * Created by Szymon Jackiewicz on 25/3/2017.
+ */
+
 public class CreateHunt extends AppCompatActivity implements OnMapReadyCallback{
 
 
@@ -79,8 +83,11 @@ public class CreateHunt extends AppCompatActivity implements OnMapReadyCallback{
         mapFragment.getMapAsync(this);
 
         initialize();
+        setTitle("New Hunt: " + huntName);
 
-        setTitle(huntName);
+        /****************************************/
+        /* Listener for description Input field */
+        /****************************************/
 
         descriptionInput.addTextChangedListener(new TextWatcher() {
             @Override
@@ -97,6 +104,9 @@ public class CreateHunt extends AppCompatActivity implements OnMapReadyCallback{
             }
         });
 
+        /******************************/
+        /* Button and textInput icons */
+        /******************************/
         pickerButtonIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,7 +119,6 @@ public class CreateHunt extends AppCompatActivity implements OnMapReadyCallback{
                 }
             }
         });
-
         clueInputIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,6 +144,7 @@ public class CreateHunt extends AppCompatActivity implements OnMapReadyCallback{
 
         /****************************/
         /* Add Point and Save Hunt! */
+        /* (Currently only returns to previous page) */
         /****************************/
         addPointAndSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -179,11 +189,16 @@ public class CreateHunt extends AppCompatActivity implements OnMapReadyCallback{
             }
         });
 
+        // Buttons initially dsabled until info is provided
         addAnotherPointButton.setEnabled(false);
         addPointAndSave.setEnabled(false);
     }
 
 
+    /**
+     * Gets the hunt name from previous activity.
+     * Initialaises the widgets on the screen by finsing by ID
+     */
     private void initialize() {
         huntName = getIntent().getExtras().getString("hunt_name");
         hunt = new Hunt(huntName);
@@ -204,6 +219,9 @@ public class CreateHunt extends AppCompatActivity implements OnMapReadyCallback{
         return selectedWaypoint != null;
     }
 
+    /**
+     * Changes the icons by the user input area to refelct wether an input was given
+     */
     private void updateIcons() {
         boolean activeButtons = true;
         if (isDescriptionSelected()) {
@@ -223,7 +241,9 @@ public class CreateHunt extends AppCompatActivity implements OnMapReadyCallback{
         addPointAndSave.setEnabled(activeButtons);
     }
 
-
+    /**
+     * Google's Place Picker API methods
+     */
     private void pickAPlace() {
         PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
         Intent intent;
@@ -236,7 +256,6 @@ public class CreateHunt extends AppCompatActivity implements OnMapReadyCallback{
             e.printStackTrace();
         }
     }
-
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
@@ -319,6 +338,14 @@ public class CreateHunt extends AppCompatActivity implements OnMapReadyCallback{
         }
     }
 
+    /**
+     * Draws a circle on the map and places a marker in the middle of it.
+     * Circle radius and colours are defined as final veriables at the top.
+     *
+     * @param coords the coordinates for the centre of the new circle
+     * @param description Text that is displayed when a marker is touched
+     * @param primary true if place is selected but not yet added to bring attention to it.
+     */
     private void addCircle(LatLng coords, String description, boolean primary) {
         CircleOptions circle = new CircleOptions();
         circle.center(coords);
@@ -343,6 +370,10 @@ public class CreateHunt extends AppCompatActivity implements OnMapReadyCallback{
         mMap.addMarker(marker);
     }
 
+    /**
+     * Called when map is ready to be used
+     * @param googleMap map object that is used in this class
+     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -352,6 +383,11 @@ public class CreateHunt extends AppCompatActivity implements OnMapReadyCallback{
         );
     }
 
+    /**
+     * Called when the back button is pressed.
+     *
+     * Used to warn users before gong back and losing their progress
+     */
     @Override
     public void onBackPressed() {
         AlertDialog alertDialog = new AlertDialog.Builder(this).create();
