@@ -50,6 +50,11 @@
             android:screenOrientation="portrait">
 
         </activity>
+        <activity
+            android:name=".ViewHunt"
+            android:screenOrientation="portrait">
+
+        </activity>
     </application>
 
 </manifest>

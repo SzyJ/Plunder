@@ -87,7 +87,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             public void onClick(View view) {
                 attemptLogin();
 
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                intent.putExtra("nav_index", MainActivity.NAV_DRAWER_MAP);
+                startActivity(intent);
             }
         });
 

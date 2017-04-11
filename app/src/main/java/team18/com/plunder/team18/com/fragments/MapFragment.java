@@ -19,12 +19,13 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import team18.com.plunder.R;
+import team18.com.plunder.utils.MapUtil;
 
 /**
  * Created by Szymon Jackiewicz on 2/6/2017.
  */
 
-public class MapFragment extends Fragment {
+public class MapFragment extends android.support.v4.app.Fragment implements MainActivityFragment {
 
     MapView mMapView;
    //private GoogleMap googleMap;
@@ -32,6 +33,7 @@ public class MapFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main_map, container, false);
+        getActivity().setTitle(getString(R.string.map_fragment_title));
 
         final FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
 
@@ -52,8 +54,9 @@ public class MapFragment extends Fragment {
 
                 //googleMap.setMyLocationEnabled(true);
 
+                //mMap = MapUtil.styleMap(mMap, getActivity());
                 // Map functionality
-                //mMap.setMinZoomPreference(15f); //20 looks good
+                mMap.setMinZoomPreference(15f); //20 looks good
                 mMap.setBuildingsEnabled(true);
 
                 // For dropping a marker at a point on the Map
@@ -72,8 +75,6 @@ public class MapFragment extends Fragment {
                         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
                     }
                 });
-
-
 
                 mMap.setMapStyle(
                         MapStyleOptions.loadRawResourceStyle(getActivity(), R.raw.style_json)

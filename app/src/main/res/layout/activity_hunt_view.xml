@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1">
+
+
+    <fragment
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:map="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/hunt_view_map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        tools:context="team18.com.plunder.ViewHunt" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp">
+
+        <LinearLayout
+            android:id="@+id/submit_new_waypoint_form"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/date_created_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Created on: "
+                android:textSize="30sp"
+                android:textColor="@color/colorAccent"/>
+
+            <TextView
+                android:id="@+id/created_by_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Created by: "
+                android:textSize="20sp"
+                android:textColor="@color/colorAccent"/>
+
+            <TextView
+                android:id="@+id/waypoint_count_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Waypoint Count"
+                android:gravity="end"
+                android:textSize="40sp"/>
+
+            <TextView
+                android:id="@+id/completion_time_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Estimated completion time: "
+                android:textSize="15sp"
+                android:textColor="@color/colorAccent"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="2">
+                <Button
+                    android:id="@+id/hunt_view_back_btn"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="0dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Back"
+                    android:textStyle="bold" />
+                <Button
+                    android:id="@+id/remake_hunt_btn"
+                    style="?android:textAppearanceSmall"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content"
+                    android:text="Remake Hunt"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</LinearLayout>

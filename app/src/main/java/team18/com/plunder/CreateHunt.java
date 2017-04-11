@@ -34,20 +34,15 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import team18.com.plunder.utils.Hunt;
+import team18.com.plunder.utils.MapUtil;
 import team18.com.plunder.utils.Waypoint;
 
 /**
  * Created by Szymon Jackiewicz on 25/3/2017.
  */
 
-public class CreateHunt extends AppCompatActivity implements OnMapReadyCallback{
+public class CreateHunt extends AppCompatActivity implements OnMapReadyCallback {
 
-
-    private final int PRIMARY_CIRCLE_FILL_COLOUR = 0x30FFA000;
-    private final int PRIMARY_CIRCLE_OUTLINE_COLOUR = 0xFFFF8F00;
-    private final int SECONDARY_CIRCLE_FILL_COLOUR = 0x30BDBDBD;
-    private final int SECONDARY_CIRCLE_OUTLINE_COLOUR = 0xFF757575;
-    private final double CIRCLE_RADIUS = 100.0;
     private final float DEFAULT_CAMERA_ZOOM = 15f;
 
     private int pointsAdded = 0;
@@ -74,7 +69,7 @@ public class CreateHunt extends AppCompatActivity implements OnMapReadyCallback{
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_hunt);
 
@@ -83,7 +78,7 @@ public class CreateHunt extends AppCompatActivity implements OnMapReadyCallback{
         mapFragment.getMapAsync(this);
 
         initialize();
-        setTitle("New Hunt: " + huntName);
+        setTitle(getString(R.string.title_prefix) + ": " + huntName);
 
         /****************************************/
         /* Listener for description Input field */
@@ -97,8 +92,8 @@ public class CreateHunt extends AppCompatActivity implements OnMapReadyCallback{
             @Override
             public void afterTextChanged(Editable s) {
                 descriptionText = descriptionInput.getText().toString();
-                if (/*descriptionText != null && */descriptionText.isEmpty()) {
-                    descriptionInput.setError("Field cannot be left empty");
+                if (descriptionText.isEmpty()) {
+                    descriptionInput.setError(getString(R.string.error_empty_description));
                 }
                 updateIcons();
             }
@@ -111,10 +106,10 @@ public class CreateHunt extends AppCompatActivity implements OnMapReadyCallback{
             @Override
             public void onClick(View v) {
                 if (isWaypointSelected()) {
-                    Toast.makeText(getApplicationContext(), "Waypoint selected, ready to add!",
+                    Toast.makeText(getApplicationContext(), getString(R.string.selected_waypoint_toast),
                             Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(getApplicationContext(), "Waypoint is not selected, Pick a Place",
+                    Toast.makeText(getApplicationContext(), getString(R.string.unselected_waypoint_toast),
                             Toast.LENGTH_LONG).show();
                 }
             }
@@ -123,10 +118,10 @@ public class CreateHunt extends AppCompatActivity implements OnMapReadyCallback{
             @Override
             public void onClick(View v) {
                 if (isDescriptionSelected()) {
-                    Toast.makeText(getApplicationContext(), "This clue Looks Good!",
+                    Toast.makeText(getApplicationContext(), getString(R.string.legal_description_toast),
                             Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(getApplicationContext(), "The Clue field cannot be left empty, enter a waypoint clue!",
+                    Toast.makeText(getApplicationContext(), getString(R.string.illegal_description_toast),
                             Toast.LENGTH_LONG).show();
                 }
             }
@@ -155,7 +150,11 @@ public class CreateHunt extends AppCompatActivity implements OnMapReadyCallback{
                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
                     hunt.addWaypoint(new Waypoint(selectedWaypoint, descriptionText));
-                    CreateHunt.super.onBackPressed();
+                    //CreateHunt.super.onBackPressed();
+
+                    Intent intent = new Intent(getApplicationContext(), ViewHunt.class);
+                    intent.putExtra("hunt_obj", hunt);
+                    startActivity(intent);
                 }
             }
         });
@@ -171,20 +170,18 @@ public class CreateHunt extends AppCompatActivity implements OnMapReadyCallback{
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
-
                     View map = findViewById(R.id.waypoint_selector_map);
-
 
                     map.getHeight();
                     hunt.addWaypoint(new Waypoint(selectedWaypoint, descriptionText));
-                    statusText.setText(String.format("%s%d", "Choose waypoint ", (++pointsAdded + 1)));
+                    statusText.setText(String.format("%s%d", getString(R.string.status_text_prefix) + " ", (++pointsAdded + 1)));
                     selectedWaypoint = null;
                     descriptionText = null;
-                    resetCirlces();
+                    mMap = MapUtil.resetCirlces(mMap, hunt);
                     descriptionInput.clearFocus();
                     descriptionInput.setText("");
-                    placePickerButton.setText("Pick a Place");
-                    resetMapCamera();
+                    placePickerButton.setText(getString(R.string.place_picker_button_text));
+                    MapUtil.resetMapCamera(hunt, mMap);
                 }
             }
         });
@@ -200,8 +197,8 @@ public class CreateHunt extends AppCompatActivity implements OnMapReadyCallback{
      * Initialaises the widgets on the screen by finsing by ID
      */
     private void initialize() {
-        huntName = getIntent().getExtras().getString("hunt_name");
-        hunt = new Hunt(huntName);
+        hunt = (Hunt) getIntent().getExtras().getSerializable("new_hunt_obj");
+        huntName = hunt.getName();
         descriptionInput = (EditText) findViewById(R.id.hunt_clue_input);
         statusText = (TextView) findViewById(R.id.status_text);
         pickerButtonIcon = (ImageView) findViewById(R.id.place_picker_btn_icon);
@@ -209,6 +206,14 @@ public class CreateHunt extends AppCompatActivity implements OnMapReadyCallback{
         placePickerButton = (Button) findViewById(R.id.place_picker_button);
         addPointAndSave = (Button) findViewById(R.id.save_hunt_button);
         addAnotherPointButton = (Button) findViewById(R.id.add_another_point_button);
+
+
+
+        // Test!!!!!!!!!!!!
+        /*
+        huntName = getIntent().getExtras().getString("hunt_name");
+        hunt = new Hunt(huntName);
+        */
     }
 
     private boolean isDescriptionSelected() {
@@ -261,7 +266,7 @@ public class CreateHunt extends AppCompatActivity implements OnMapReadyCallback{
             if (resultCode == RESULT_OK) {
                 Place place = PlacePicker.getPlace(data, this);
                 selectedWaypoint = place.getLatLng();
-                resetCirlces();
+                mMap = MapUtil.resetCirlces(mMap, hunt, selectedWaypoint);
                 try {
                     mMap.animateCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(selectedWaypoint).zoom(DEFAULT_CAMERA_ZOOM).build()));
                 } catch (IllegalStateException ise) {
@@ -274,100 +279,20 @@ public class CreateHunt extends AppCompatActivity implements OnMapReadyCallback{
                  * Provides nearest address when arbitrary locaton is chosen
                  * Provides place name if a place of interest is chosen.
                  */
-                placePickerButton.setText("Selected waypoint: " +
-                        (place.getId().toUpperCase().startsWith("CH")
-                                ? place.getName()
-                                : ("near " + place.getAddress())
-                        )
-                );
+                if (place.getAddress() == null) {
+                    placePickerButton.setText(getString(R.string.context_address_not_found));
+                } else {
+                    placePickerButton.setText(getString(R.string.context_selected_waypoint) + ": " +
+                            (place.getId().toUpperCase().startsWith("CH")
+                                    ? place.getName()
+                                    : (getString(R.string.context_address_prefix) + " " + place.getAddress())
+                            )
+                    );
+                }
+
             }
         }
         updateIcons();
-    }
-
-
-    private void resetMapCamera() {
-        CameraUpdate camera;
-
-        if (pointsAdded > 1) {
-
-            /*
-             * Relocates the Camera to show all currently selected waypoints
-             * This will only trgger if more than one waypoint is selected
-             */
-            LatLngBounds.Builder builder = new LatLngBounds.Builder();
-            // Add all waypoints to the builder
-            for (Waypoint wp : hunt.getWaypointList()) {
-                builder.include(wp.getCoords());
-            }
-            LatLngBounds bounds = builder.build();
-
-            // Use builder with all the waypoints to generate new camera pos.
-            int padding = 200;
-            camera = CameraUpdateFactory.newLatLngBounds(bounds, padding);
-        } else {
-
-            /*
-             * If only one point is selected, camera is centered on it in the
-             * same way as it would be when a new point is selected.
-             */
-            camera = CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(hunt.getWaypointList().get(0).getCoords()).zoom(DEFAULT_CAMERA_ZOOM).build());
-        }
-
-
-        /*
-         * Error can occur if the virtual keyboard is active and not
-         * enough room is found to fit all the waypoints on the screen.
-         * (When more than one waypoint is on the map)
-         */
-        try {
-            mMap.animateCamera(camera);
-        } catch (IllegalStateException ise) {
-            //mMap.moveCamera(camera);
-        }
-    }
-
-    private void resetCirlces() {
-        mMap.clear();
-        int stepper = 1;
-        for (Waypoint wp : hunt.getWaypointList()) {
-            addCircle(wp.getCoords(), "Waypoint " + (stepper++) + ": \"" + wp.getDescription() + "\"", false);
-        }
-        if (selectedWaypoint != null) {
-            addCircle(selectedWaypoint, "New Waypoint", true);
-        }
-    }
-
-    /**
-     * Draws a circle on the map and places a marker in the middle of it.
-     * Circle radius and colours are defined as final veriables at the top.
-     *
-     * @param coords the coordinates for the centre of the new circle
-     * @param description Text that is displayed when a marker is touched
-     * @param primary true if place is selected but not yet added to bring attention to it.
-     */
-    private void addCircle(LatLng coords, String description, boolean primary) {
-        CircleOptions circle = new CircleOptions();
-        circle.center(coords);
-        circle.radius(CIRCLE_RADIUS);
-        MarkerOptions marker;
-        if (primary) {
-            circle.fillColor(PRIMARY_CIRCLE_FILL_COLOUR);
-            circle.strokeColor(PRIMARY_CIRCLE_OUTLINE_COLOUR);
-            marker = new MarkerOptions()
-                    .position(coords)
-                    .title(description)
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_add_location));
-        } else {
-            circle.fillColor(SECONDARY_CIRCLE_FILL_COLOUR);
-            circle.strokeColor(SECONDARY_CIRCLE_OUTLINE_COLOUR);
-            marker = new MarkerOptions()
-                    .position(coords)
-                    .title(description)
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_place));
-        }
-        mMap.addCircle(circle);
-        mMap.addMarker(marker);
     }
 
     /**
@@ -376,11 +301,7 @@ public class CreateHunt extends AppCompatActivity implements OnMapReadyCallback{
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-        mMap.setBuildingsEnabled(true);
-        mMap.setMapStyle(
-                MapStyleOptions.loadRawResourceStyle(this, R.raw.style_json)
-        );
+        mMap = MapUtil.styleMap(googleMap, this);
     }
 
     /**
@@ -391,9 +312,9 @@ public class CreateHunt extends AppCompatActivity implements OnMapReadyCallback{
     @Override
     public void onBackPressed() {
         AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-        alertDialog.setTitle("Go Back?");
-        alertDialog.setMessage("You have pressed the back button, if you go back now, all progress will be lost. Go back and lose progress?");
-        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+        alertDialog.setTitle(getString(R.string.go_back_alert_title));
+        alertDialog.setMessage(getString(R.string.go_back_alert_text));
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, getString(R.string.go_back_alert_button),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

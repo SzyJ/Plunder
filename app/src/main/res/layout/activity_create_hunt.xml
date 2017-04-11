@@ -89,7 +89,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        tools:context="com.example.szymon.myapplication.MapsActivity" />
+        tools:context="team18.com.plunder.CreateHunt" />
 
     <ScrollView
         android:id="@+id/add_waypoint_form"

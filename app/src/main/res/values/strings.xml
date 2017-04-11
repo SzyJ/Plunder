@@ -6,6 +6,14 @@
 
     <string name="action_settings">Settings</string>
 
+    <!-- Fragment Titles -->
+    <string name="search_fragment_title">Plunder Search</string>
+    <string name="map_fragment_title">Plunder</string>
+    <string name="current_hunts_fragment_title">Current Hunts</string>
+    <string name="man_hunts_fragment_title">Manage Hunts</string>
+    <string name="man_events_fragment_title">Manage Events</string>
+    <string name="settings_fragment_title">Settings</string>
+
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
@@ -18,4 +26,26 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <!-- Strings related to Hunt Creation -->
+    <string name="title_prefix">New Hunt</string>
+    <string name="error_empty_description">Description cannot be left empty</string>
+    <string name="selected_waypoint_toast">Waypoint selected, ready to add!</string>
+    <string name="unselected_waypoint_toast">Waypoint is not selected, Pick a Place</string>
+    <string name="legal_description_toast">This clue Looks Good!</string>
+    <string name="illegal_description_toast">The Clue field cannot be left empty, enter a waypoint clue!</string>
+    <string name="status_text_prefix">Choose waypoint</string>
+    <string name="place_picker_button_text">Pick a Place</string>
+    <string name="context_address_not_found">Place Selected! Address could not be found.</string>
+    <string name="context_selected_waypoint">Selected waypoint</string>
+    <string name="context_address_prefix">near</string>
+    <string name="go_back_alert_title">Go Back?</string>
+    <string name="go_back_alert_text">You have pressed the back button, if you go back now,
+        all progress will be lost. Go back and lose progress?</string>
+    <string name="go_back_alert_button">OK</string>
+
+    <!-- Strings related to Hunt View -->
+
+    <!-- Strings related to ... -->
+
 </resources>

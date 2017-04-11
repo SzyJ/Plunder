@@ -22,6 +22,7 @@ import com.google.android.gms.vision.text.Text;
 
 import team18.com.plunder.CreateHunt;
 import team18.com.plunder.R;
+import team18.com.plunder.utils.Hunt;
 
 import static com.google.android.gms.location.LocationRequest.create;
 
@@ -29,12 +30,13 @@ import static com.google.android.gms.location.LocationRequest.create;
  * Created by Szymon Jackiewicz on 2/6/2017.
  */
 
-public class ManHuntFragment extends android.support.v4.app.Fragment {
+public class ManHuntFragment extends android.support.v4.app.Fragment implements MainActivityFragment {
 
     @Nullable
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_manage_hunts, container, false);
+        getActivity().setTitle(getString(R.string.man_hunts_fragment_title));
 
         FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -57,7 +59,7 @@ public class ManHuntFragment extends android.support.v4.app.Fragment {
                                 if (!huntName.isEmpty()) {
                                     dialog.dismiss();
                                     Intent intent = new Intent(getActivity(), CreateHunt.class);
-                                    intent.putExtra("hunt_name", huntName);
+                                    intent.putExtra("new_hunt_obj", new Hunt(huntName));
                                     startActivity(intent);
                                 } else {
                                     huntNameInput.setError("Hunt name cannot be empty!");
@@ -71,8 +73,6 @@ public class ManHuntFragment extends android.support.v4.app.Fragment {
                                     }
                                 }
                         );
-
-
 
                 builder.show();
             }

@@ -14,12 +14,13 @@ import team18.com.plunder.R;
  * Created by Szymon Jackiewicz on 2/6/2017.
  */
 
-public class ManEventsFragment extends android.support.v4.app.Fragment {
+public class ManEventsFragment extends android.support.v4.app.Fragment implements MainActivityFragment {
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_manage_events, container, false);
+        getActivity().setTitle(getString(R.string.man_events_fragment_title));
 
         FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
