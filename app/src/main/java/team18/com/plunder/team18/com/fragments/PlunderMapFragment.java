@@ -16,26 +16,24 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import team18.com.plunder.R;
-import team18.com.plunder.utils.MapUtil;
 
 /**
  * Created by Szymon Jackiewicz on 2/6/2017.
  */
 
-public class MapFragment extends android.support.v4.app.Fragment implements MainActivityFragment {
+public class PlunderMapFragment extends Fragment implements MainActivityFragment {
 
     MapView mMapView;
    //private GoogleMap googleMap;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_main_map, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_plunder_map, container, false);
         getActivity().setTitle(getString(R.string.map_fragment_title));
 
-        final FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
+        final FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.location_fab);
 
         mMapView = (MapView) rootView.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
@@ -64,6 +62,7 @@ public class MapFragment extends android.support.v4.app.Fragment implements Main
                 mMap.addMarker(new MarkerOptions().position(newcastleUniversityCoordinates).title("Hello World"));
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(newcastleUniversityCoordinates));
                 */
+
 
                 // For zooming automatically to the location of the marker
                 final CameraPosition cameraPosition = new CameraPosition.Builder().target(newcastleUniversityCoordinates).zoom(15f).build();

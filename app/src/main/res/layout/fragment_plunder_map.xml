@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_weight="1">
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+
+    <ScrollView
+        android:id="@+id/add_waypoint_form"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <!--
+        android:layout_marginTop="16dp"
+        -->
+
+        <LinearLayout
+            android:id="@+id/submit_new_waypoint_form"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginBottom="16dp"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/description_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Waypoint description goes here"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:textSize="20dp" />
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/scan_qr_fab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/fab_margin"
+                    android:layout_marginBottom="@dimen/fab_margin"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginLeft="8dp"
+                    app:backgroundTint="@color/colorPrimary"
+                    app:srcCompat="@drawable/ic_scan_qr" />
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/location_fab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/fab_margin"
+                    android:layout_marginBottom="@dimen/fab_margin"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginLeft="8dp"
+                    app:backgroundTint="@color/colorPrimary"
+                    app:srcCompat="@drawable/ic_my_location_white"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="8">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/timer_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="8dp"
+                        app:srcCompat="@drawable/ic_timer" />
+
+                    <TextView
+                        android:id="@+id/timer_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1h 23m"
+                        android:layout_gravity="center"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/sensor_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="8dp"
+                        app:srcCompat="@drawable/ic_sensor_hot" />
+
+                    <TextView
+                        android:id="@+id/sensor_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="You're Here!"
+                        android:textColor="@color/colourHot"
+                        android:layout_gravity="center"
+                        android:textSize="20sp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/waypoint_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="8dp"
+                        app:srcCompat="@drawable/ic_waypoint" />
+                    <TextView
+                        android:id="@+id/waypoint_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="5/20"
+                        android:layout_gravity="center"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <!--
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:weightSum="2">
+
+                <Button
+                    android:id="@+id/save_hunt_button"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+
+
+                    android:text="Review currnet clue"
+                    android:textStyle="bold" />
+                <Button
+                    android:id="@+id/add_another_point_button"
+                    style="?android:textAppearanceSmall"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="Scan QR code"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            -->
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
