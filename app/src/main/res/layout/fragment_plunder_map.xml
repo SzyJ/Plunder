@@ -82,7 +82,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="4"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="6dp">
 
                     <ImageView
                         android:id="@+id/timer_icon"
@@ -96,16 +98,19 @@
                         android:id="@+id/timer_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1h 23m"
+                        android:text="&lt;1m"
+                        android:textColor="@color/colorAccent"
                         android:layout_gravity="center"
-                        android:textSize="20sp" />
+                        android:textSize="17sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="6dp">
 
                     <ImageView
                         android:id="@+id/sensor_icon"
@@ -113,14 +118,14 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginRight="8dp"
-                        app:srcCompat="@drawable/ic_sensor_hot" />
+                        app:srcCompat="@drawable/ic_finding_location" />
 
                     <TextView
                         android:id="@+id/sensor_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="You're Here!"
-                        android:textColor="@color/colourHot"
+                        android:text="Finding your Location..."
+                        android:textColor="@color/colorAccent"
                         android:layout_gravity="center"
                         android:textSize="20sp" />
                 </LinearLayout>
@@ -128,7 +133,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="4"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="6dp">
 
                     <ImageView
                         android:id="@+id/waypoint_icon"
@@ -141,9 +148,10 @@
                         android:id="@+id/waypoint_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="5/20"
+                        android:text="\??/??"
+                        android:textColor="@color/colorAccent"
                         android:layout_gravity="center"
-                        android:textSize="20sp" />
+                        android:textSize="17sp" />
 
                 </LinearLayout>
 

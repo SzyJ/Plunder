@@ -46,6 +46,12 @@
 
     <!-- Strings related to Hunt View -->
 
+    <!-- Strings related to Hot/Cold Sensor -->
+    <string name="sensor_location_found">You\'re here!</string>
+    <string name="sensor_hotter">Getting hotter</string>
+    <string name="sensor_colder">Getting colder</string>
+    <string name="sensor_far_away">You\'re quite far</string>
+
     <!-- Strings related to ... -->
 
 </resources>

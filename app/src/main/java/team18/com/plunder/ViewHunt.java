@@ -66,6 +66,17 @@ public class ViewHunt extends AppCompatActivity implements OnMapReadyCallback {
             }
         });
 
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity.setActiveHunt(hunt);
+                Intent intent = new Intent(v.getContext(), MainActivity.class);
+                intent.putExtra("nav_index", MainActivity.NAV_DRAWER_MAP);
+                //intent.putExtra("plunder_hunt", hunt);
+                startActivity(intent);
+            }
+        });
         setTitle(huntName);
         writeText();
     }
@@ -84,7 +95,6 @@ public class ViewHunt extends AppCompatActivity implements OnMapReadyCallback {
     }
 
     private void writeText() {
-
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         dateText.append("" + df.format(hunt.getDateCreated()));
         authorText.append("" + hunt.getAuthor());
@@ -105,12 +115,13 @@ public class ViewHunt extends AppCompatActivity implements OnMapReadyCallback {
         mMap = MapUtil.resetCirlces(mMap, hunt);
 
         // attempt to animate Map Camera to show all points
-        MapUtil.resetMapCamera(hunt, mMap);
+        MapUtil.resetMapCamera(hunt, mMap, false);
     }
+
+
 
     @Override
     public void onBackPressed() {
-
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("nav_index", MainActivity.NAV_DRAWER_MAN_HUNTS);
         startActivity(intent);

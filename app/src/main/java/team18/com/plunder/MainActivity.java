@@ -1,8 +1,14 @@
 package team18.com.plunder;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -20,12 +26,15 @@ import team18.com.plunder.team18.com.fragments.MainActivityFragment;
 import team18.com.plunder.team18.com.fragments.ManEventsFragment;
 import team18.com.plunder.team18.com.fragments.ManHuntFragment;
 import team18.com.plunder.team18.com.fragments.MapFragment;
+import team18.com.plunder.team18.com.fragments.PlunderMapFragment;
 import team18.com.plunder.team18.com.fragments.SearchFragment;
 import team18.com.plunder.team18.com.fragments.SettingsFrament;
+import team18.com.plunder.utils.Hunt;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    // Navigation Drawer codes
     public static final int NAV_DRAWER_SEARCH = 0;
     public static final int NAV_DRAWER_MAP = 1;
     public static final int NAV_DRAWER_CURRENT_HUNTS = 2;
@@ -33,9 +42,11 @@ public class MainActivity extends AppCompatActivity
     public static final int NAV_DRAWER_MAN_EVENTS = 4;
     public static final int NAV_DRAWER_SETTINGS = 5;
 
+    private static Hunt activeHunt = null;
 
     private MainActivityFragment searchFragment;
     private MainActivityFragment mapFragment;
+    private Fragment activePlunderMapFragment;
     private MainActivityFragment currHuntFragment;
     private MainActivityFragment manHuntFragment;
     private MainActivityFragment manEventsFragment;
@@ -45,11 +56,31 @@ public class MainActivity extends AppCompatActivity
 
     private NavigationView navigationView;
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (activePlunderMapFragment != null) {
+            //getSupportFragmentManager().putFragment(outState, "plunder_map_fragment", activePlunderMapFragment);
+        }
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState != null) {
+            activePlunderMapFragment = getSupportFragmentManager().getFragment(savedInstanceState, "plunder_map_fragment");
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (savedInstanceState != null) {
+            activePlunderMapFragment = getSupportFragmentManager().getFragment(savedInstanceState, "plunder_map_fragment");
+        }
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -125,20 +156,17 @@ public class MainActivity extends AppCompatActivity
             currentScreenIndex = NAV_DRAWER_SETTINGS;
             navigateToCorrectScreen();
         } else if (id == R.id.nav_satellite) {
-            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             return true;
         } else if (id == R.id.nav_night_mode) {
-            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             return true;
         }
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
-    private void navigateToCorrectScreen() {
+    public void navigateToCorrectScreen() {
         FragmentManager fragMan = getSupportFragmentManager();
         switch (currentScreenIndex) {
             case NAV_DRAWER_SEARCH:
@@ -152,9 +180,19 @@ public class MainActivity extends AppCompatActivity
                 if (mapFragment == null) {
                     mapFragment = new MapFragment();
                 }
-                //SupportMapFragment supportMapFragment =  SupportMapFragment.newInstance();
-                fragMan.beginTransaction().replace(R.id.content_container,
-                        (android.support.v4.app.Fragment) mapFragment).commit();
+
+                if (activeHunt != null && activePlunderMapFragment == null) {
+                    activePlunderMapFragment = new PlunderMapFragment();
+                }
+
+                if (activeHunt != null) {
+                    fragMan.beginTransaction().replace(R.id.content_container,
+                            (android.support.v4.app.Fragment) activePlunderMapFragment).commit();
+                } else {
+                    fragMan.beginTransaction().replace(R.id.content_container,
+                            (android.support.v4.app.Fragment) mapFragment).commit();
+                }
+
                 break;
             case NAV_DRAWER_CURRENT_HUNTS:
                 if (currHuntFragment == null) {
@@ -187,8 +225,9 @@ public class MainActivity extends AppCompatActivity
         }
 
         navigationView.getMenu().getItem(currentScreenIndex).setChecked(true);
-
-
     }
 
+
+    public static void setActiveHunt(Hunt hunt) { activeHunt = hunt; }
+    public static Hunt getActiveHunt() { return activeHunt; }
 }

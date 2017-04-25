@@ -1,7 +1,17 @@
 package team18.com.plunder.utils;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 
+import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -19,9 +29,16 @@ import team18.com.plunder.R;
  * Created by Szymon on 07-Apr-17.
  */
 
-public class MapUtil {
+public class MapUtil implements ActivityCompat.OnRequestPermissionsResultCallback{
 
+    // Location Permissions
+    private static LocationManager locationManager;
+    private static android.location.LocationListener locationListener;
+    public static final long REFRESH_INTERVAL = 1000; //How often the app will check for location updates (in MilliSeconds)
+    public static final float MIN_DISTANCE = 0f; // Location change needed for location refresh to trigger (in Meters)
+    public static final int PERMISSION_REQUEST_CODE = 0;
 
+    // Map Drawing
     private final static int PRIMARY_CIRCLE_FILL_COLOUR = 0x30FFA000;
     private final static int PRIMARY_CIRCLE_OUTLINE_COLOUR = 0xFFFF8F00;
     private final static int SECONDARY_CIRCLE_FILL_COLOUR = 0x30BDBDBD;
@@ -120,7 +137,7 @@ public class MapUtil {
      * @param hunt hunt from which the waypoints would be selected
      * @param mMap the map affected
      */
-    public static void resetMapCamera(Hunt hunt, GoogleMap mMap) {
+    public static void resetMapCamera(Hunt hunt, GoogleMap mMap, boolean animate) {
         CameraUpdate camera;
 
         if (hunt.getWaypointList().size() > 1) {
@@ -154,9 +171,88 @@ public class MapUtil {
          * (When more than one waypoint is on the map)
          */
         try {
-            mMap.animateCamera(camera);
+            if (animate) {
+                mMap.animateCamera(camera);
+            } else {
+                mMap.moveCamera(camera);
+            }
         } catch (IllegalStateException ise) {
             //mMap.moveCamera(camera);
+        }
+    }
+
+    public static void requestPermissions(final Activity activity) {
+        // Get permissions from user for location
+        locationManager = (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
+        locationListener = new android.location.LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+                /*
+                Snackbar.make(activity, "GPS Re-Enabled", Snackbar.LENGTH_SHORT)
+                        .setAction("Action", null).show();
+                */
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+                /*
+                Snackbar.make(activity, "GPS Disabled", Snackbar.LENGTH_INDEFINITE)
+                        .addCallback(new Snackbar.Callback() {
+                            @Override
+                            public void onShown(Snackbar sb) {
+                                super.onShown(sb);
+                            }
+                        })
+                        .setAction("Action", null).show();
+               */
+            }
+        };
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (activity.checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                    && activity.checkSelfPermission(android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                    ) {
+                activity.requestPermissions(new String[]{
+                        android.Manifest.permission.INTERNET,
+                        android.Manifest.permission.ACCESS_FINE_LOCATION,
+                        android.Manifest.permission.ACCESS_COARSE_LOCATION
+                }, PERMISSION_REQUEST_CODE);
+            }
+        } else {
+            try {
+                locationManager.requestLocationUpdates("gps", REFRESH_INTERVAL, MIN_DISTANCE,locationListener);
+            } catch (SecurityException e) {
+                // APp will not function properly if location permission is not granted.
+                // The app should be locked up here until the permission is granted
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_REQUEST_CODE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    try {
+                        locationManager.requestLocationUpdates("gps", REFRESH_INTERVAL, MIN_DISTANCE, locationListener);
+                    } catch (SecurityException e) {
+                        e.printStackTrace();
+                    }
+                }
+                break;
+            default:
         }
     }
 }

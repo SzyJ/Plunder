@@ -3,6 +3,7 @@ package team18.com.plunder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -72,6 +73,8 @@ public class CreateHunt extends AppCompatActivity implements OnMapReadyCallback 
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_hunt);
+
+
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.waypoint_selector_map);
@@ -181,7 +184,7 @@ public class CreateHunt extends AppCompatActivity implements OnMapReadyCallback 
                     descriptionInput.clearFocus();
                     descriptionInput.setText("");
                     placePickerButton.setText(getString(R.string.place_picker_button_text));
-                    MapUtil.resetMapCamera(hunt, mMap);
+                    MapUtil.resetMapCamera(hunt, mMap, true);
                 }
             }
         });
@@ -302,6 +305,11 @@ public class CreateHunt extends AppCompatActivity implements OnMapReadyCallback 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = MapUtil.styleMap(googleMap, this);
+        try {
+            mMap.setMyLocationEnabled(true);
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
