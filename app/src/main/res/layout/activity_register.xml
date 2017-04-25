@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_register"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:weightSum="4"
+    android:orientation="vertical"
+    tools:context="team18.com.plunder.RegisterActivity">
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/etName"
+        android:paddingBottom="@dimen/edit_text_padding"
+        android:hint="Full Name"
+        android:textSize="18sp"
+        />
+
+    <EditText
+        android:id="@+id/etEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:paddingBottom="@dimen/edit_text_padding"
+        android:paddingTop="@dimen/edit_text_padding"
+        android:singleLine="true"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/etPassword"
+        android:paddingBottom="@dimen/edit_text_padding"
+        android:paddingTop="@dimen/edit_text_padding"
+        android:hint="Password"
+        android:singleLine="true"
+        android:fontFamily="sans-serif"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/etPassword2"
+        android:hint="Re-enter Password"
+        android:paddingBottom="@dimen/edit_text_padding"
+        android:paddingTop="@dimen/edit_text_padding"
+        android:singleLine="true"
+        android:fontFamily="sans-serif"
+        />
+
+    <EditText
+        android:focusable="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:ems="10"
+        android:id="@+id/etBirthdate"
+        android:hint="Birthdate"
+        android:paddingBottom="@dimen/edit_text_padding"
+        android:paddingTop="@dimen/edit_text_padding"
+        />
+
+    <Button
+        android:text="Register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bRegister"
+        />
+
+
+</LinearLayout>
