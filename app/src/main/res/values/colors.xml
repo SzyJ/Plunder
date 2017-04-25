@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Colours for app style-->
     <color name="colorPrimary">#FFA000</color>
     <color name="colorPrimaryDark">#FF8F00</color>
     <color name="colorAccent">#9E9E9E</color>
     <color name="colorWhite">#FAFAFA</color>
+
+    <!-- Colours for "hot/cold sensor" -->
+    <color name="colourHot">#EF9A9A</color>
+    <color name="colourCold">#81D4FA</color>
+
 </resources>
