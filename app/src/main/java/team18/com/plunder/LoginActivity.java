@@ -82,6 +82,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
          */
                 Intent MainIntent = new Intent(LoginActivity.this, MainActivity.class);
+                MainIntent.putExtra("nav_index", MainActivity.NAV_DRAWER_MAP);
                 LoginActivity.this.startActivity(MainIntent);
             }
         });
