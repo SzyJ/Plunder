@@ -22,6 +22,7 @@ public class Hunt implements Serializable, Iterator<Waypoint> {
     private Date dateCreated;
     private String author;
     private long completionTime;
+    private int image;
 
     public Hunt(String name) {
 
@@ -45,6 +46,11 @@ public class Hunt implements Serializable, Iterator<Waypoint> {
     public String getAuthor() { return author; }
     public Date getDateCreated() { return dateCreated; }
     public long getCompletionTime() { return completionTime; }
+
+
+    public void setImage(int image) { this.image = image; }
+
+    public int getImage() { return image; }
 
     public void resetHunt() {
         dateCreated = new Date();

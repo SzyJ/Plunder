@@ -10,4 +10,8 @@
     <color name="colourHot">#EF9A9A</color>
     <color name="colourCold">#81D4FA</color>
 
+    <!-- Colours for cardView -->
+    <color name="viewBg">#f1f5f8</color>
+    <color name="hunt_title">#4c4c4c</color>
+
 </resources>
