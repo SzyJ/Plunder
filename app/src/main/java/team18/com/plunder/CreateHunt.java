@@ -175,7 +175,7 @@ public class CreateHunt extends AppCompatActivity implements OnMapReadyCallback 
 
                     View map = findViewById(R.id.waypoint_selector_map);
 
-                    map.getHeight();
+                    //map.getHeight();
                     hunt.addWaypoint(new Waypoint(selectedWaypoint, descriptionText));
                     statusText.setText(String.format("%s%d", getString(R.string.status_text_prefix) + " ", (++pointsAdded + 1)));
                     selectedWaypoint = null;
