@@ -73,6 +73,7 @@ public final class BarcodeCaptureActivity extends AppCompatActivity
 
     // Constants used to pass extra data in the intent
     public static final String BarcodeObject = "Barcode";
+    public static final String ManualInput = "manual_input";
 
     private CameraSource mCameraSource;
     private CameraSourcePreview mPreview;
@@ -115,21 +116,23 @@ public final class BarcodeCaptureActivity extends AppCompatActivity
             public void onClick(View v) {
                 final View dialogView = v.inflate(v.getContext(), R.layout.dialog_manual_input, null);
                 android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(act);
-                builder.setTitle("Create New Hunt");
-                builder.setMessage("Some Text describing what a hunt is. Please give your new hunt a name and proceed to choose waypoints for it");
+                builder.setTitle("Manual waypoint code input");
+                //builder.setMessage("");
                 builder.setView(dialogView);
 
                 final EditText manInput = (EditText) dialogView.findViewById(R.id.manual_input_field);
                 manInput.setFilters(new InputFilter[] { new InputFilter.LengthFilter(5) });
-                builder.setPositiveButton("Choose Hunt Waypoints!",
+                builder.setPositiveButton("Submit code!",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                String huntName = manInput.getText().toString();
-                                if (!huntName.isEmpty()) {
+                                String input = manInput.getText().toString();
+                                if (!input.isEmpty()) {
                                     dialog.dismiss();
-                                    onDetectedQrCode(new Barcode());
+                                    Intent intent = new Intent();
+                                    intent.putExtra(ManualInput, input);
+                                    setResult(CommonStatusCodes.SUCCESS, intent);
+                                    finish();
                                 } else {
-                                    manInput.setError("Hunt name cannot be empty!");
                                 }
                             }
                         })
