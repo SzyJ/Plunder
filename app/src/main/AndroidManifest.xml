@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <uses-feature android:name="android.hardware.location.gps" />
 
@@ -62,6 +63,11 @@
         </activity>
         <activity
             android:name=".ViewHunt"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity
+            android:name=".utils.barcode.BarcodeCaptureActivity"
             android:screenOrientation="portrait">
 
         </activity>

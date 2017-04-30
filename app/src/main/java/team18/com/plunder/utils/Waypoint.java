@@ -19,11 +19,16 @@ public class Waypoint implements Serializable {
 
     private transient LatLng coords;
     private String description;
+    private String scanCode;
 
     public Waypoint(LatLng coords, String description) {
         this.coords = coords;
         this.description = description;
-
+        //Generate a random 5 digit code for waypoint
+        for (int i = 0; i <= 5; i++) {
+            scanCode += (int) Math.floor(Math.random() * 10);
+        }
+        scanCode = "12345";
     }
 
     public LatLng getCoords() {
@@ -32,6 +37,7 @@ public class Waypoint implements Serializable {
     }
     public String getDescription() { return description; }
 
+    public String getScanCode() { return scanCode; }
 
     private void writeObject(ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();

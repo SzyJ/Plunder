@@ -21,6 +21,8 @@ import android.view.MenuItem;
 
 import com.google.android.gms.maps.SupportMapFragment;
 
+import java.util.Date;
+
 import team18.com.plunder.team18.com.fragments.CurrHuntFragment;
 import team18.com.plunder.team18.com.fragments.MainActivityFragment;
 import team18.com.plunder.team18.com.fragments.ManEventsFragment;
@@ -42,7 +44,13 @@ public class MainActivity extends AppCompatActivity
     public static final int NAV_DRAWER_MAN_EVENTS = 4;
     public static final int NAV_DRAWER_SETTINGS = 5;
 
+
+
+    //Janky code for saving Vars from current hunt
+    public boolean initialized = false;
+    public int waypointIndex = 0;
     private static Hunt activeHunt = null;
+    public Date timeStarted;
 
     private MainActivityFragment searchFragment;
     private MainActivityFragment mapFragment;
@@ -60,7 +68,7 @@ public class MainActivity extends AppCompatActivity
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         if (activePlunderMapFragment != null) {
-            //getSupportFragmentManager().putFragment(outState, "plunder_map_fragment", activePlunderMapFragment);
+            getSupportFragmentManager().putFragment(outState, "plunder_map_fragment", activePlunderMapFragment);
         }
     }
 

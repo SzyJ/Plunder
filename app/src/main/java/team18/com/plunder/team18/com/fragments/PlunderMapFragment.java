@@ -2,64 +2,41 @@ package team18.com.plunder.team18.com.fragments;
 
 import android.animation.ArgbEvaluator;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Criteria;
+import android.graphics.Point;
 import android.location.Location;
 import android.location.LocationManager;
-import android.location.LocationProvider;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringDef;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MapStyleOptions;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.vision.text.Text;
+import com.google.android.gms.vision.barcode.Barcode;
 
-import java.sql.Time;
 import java.util.Date;
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.zip.Inflater;
 
 import team18.com.plunder.MainActivity;
-import team18.com.plunder.Manifest;
 import team18.com.plunder.R;
-import team18.com.plunder.utils.Hunt;
 import team18.com.plunder.utils.MapUtil;
 import team18.com.plunder.utils.Waypoint;
+import team18.com.plunder.utils.barcode.BarcodeCaptureActivity;
 
 import static android.content.Context.LOCATION_SERVICE;
 import static team18.com.plunder.utils.MapUtil.PERMISSION_REQUEST_CODE;
@@ -73,6 +50,9 @@ public class PlunderMapFragment extends Fragment implements
     // User Location and App permissions
     private LocationManager locationManager;
     private android.location.LocationListener locationListener;
+
+    // Qr Scanner result code
+    private static final int BARCODE_READER_REQUEST_CODE = 1;
 
     // Screen View objects
     private Activity activity;
@@ -90,12 +70,12 @@ public class PlunderMapFragment extends Fragment implements
     private boolean hotter = true;
     private static float HOT_COLD_SENSOR_HOT_LIMIT = 30F;
     private static float HOT_COLD_SENSOR_COLD_LIMIT = 500F;
-    private Hunt currentHunt;
-    private int waypointIndex;
+    //private Hunt currentHunt;
+    //private int waypointIndex;
     private LatLng currentWaypoint;
     private Location userLocation;
     private String waypointClue;
-    private Date timeStarted;
+    //private Date timeStarted;
     private boolean active = true;
 
     @Override
@@ -108,6 +88,7 @@ public class PlunderMapFragment extends Fragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_plunder_map, container, false);
 
+        rootView.setTag("plunder_map_fragment");
         active = true;
 
         final LayoutInflater layInf = inflater;
@@ -125,35 +106,50 @@ public class PlunderMapFragment extends Fragment implements
         locationFab = (FloatingActionButton) rootView.findViewById(R.id.location_fab);
         scanQrFab = (FloatingActionButton) rootView.findViewById(R.id.scan_qr_fab);
 
+        /*
         // Initialize hunt vars
         if (savedInstanceState != null) {
+
             currentHunt = (Hunt) savedInstanceState.getSerializable("hunt");
             timeStarted = (Date) savedInstanceState.getSerializable("start_time");
             waypointIndex = savedInstanceState.getInt("waypoint_index") - 1;
+            Snackbar.make(rootView, "Test", Snackbar.LENGTH_INDEFINITE)
+                    .addCallback(new Snackbar.Callback() {
+                        @Override
+                        public void onShown(Snackbar sb) {
+                            super.onShown(sb);
+                        }
+                    })
+                    .setAction("Action", null).show();
         } else {
+
             currentHunt = ((MainActivity) activity).getActiveHunt();
             timeStarted = new Date();
             waypointIndex = 0;
+        }*/
+        if (!((MainActivity) activity).initialized) {
+            ((MainActivity) activity).initialized = true;
+            ((MainActivity) activity).waypointIndex = 0;
+            ((MainActivity) activity).timeStarted = new Date();
+        } else {
+            ((MainActivity) activity).waypointIndex--;
         }
-        activity.setTitle(currentHunt.getName());
+
+
+        activity.setTitle(((MainActivity) activity).getActiveHunt().getName());
         updateWaypoint();
 
         // Set listeners for buttons
         locationFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
             }
         });
         scanQrFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (updateWaypoint()) {
-                    locationListener = null;
-                    MainActivity.setActiveHunt(null);
-                    active = false;
-                    ((MainActivity) activity).navigateToCorrectScreen();
-                }
+                Intent intent = new Intent(getContext(), BarcodeCaptureActivity.class);
+                startActivityForResult(intent, BARCODE_READER_REQUEST_CODE);
             }
         });
         locationListener = new android.location.LocationListener() {
@@ -163,10 +159,9 @@ public class PlunderMapFragment extends Fragment implements
                     hotter = (getDistanceFromWaypoint(location)) < (getDistanceFromWaypoint(userLocation));
                     userLocation = location;
                     //sensorText.setText("Dist to WP: " + getDistanceFromWaypoint(userLocation));
-                    timerText.setText(formatTime(new Date().getTime() - timeStarted.getTime()));
+                    timerText.setText(formatTime((new Date().getTime()) - ((MainActivity) activity).timeStarted.getTime()));
                     updateSensor();
                 }
-
             }
 
             @Override
@@ -236,6 +231,60 @@ public class PlunderMapFragment extends Fragment implements
         return rootView;
     }
 
+    // On return from QR Scanner
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == BARCODE_READER_REQUEST_CODE) {
+            if (resultCode == CommonStatusCodes.SUCCESS) {
+                if (data != null) {
+
+                    String codeFromScanner;
+                    Barcode barcode = data.getParcelableExtra(BarcodeCaptureActivity.BarcodeObject);
+                    if (barcode != null) {
+                        Point[] p = barcode.cornerPoints;
+                        codeFromScanner = barcode.displayValue;
+                    } else {
+                        codeFromScanner = data.getStringExtra(BarcodeCaptureActivity.ManualInput);
+                    }
+
+
+
+                    /*
+                    Snackbar.make(rootView, "Scan: " + barcode.displayValue + ", Expected: " + currentHunt.getWaypointList().get(waypointIndex -1).getScanCode(), Snackbar.LENGTH_INDEFINITE)
+                            .addCallback(new Snackbar.Callback() {
+                                @Override
+                                public void onShown(Snackbar sb) {
+                                    super.onShown(sb);
+                                }
+                            })
+                            .setAction("Action", null).show();
+                    */
+
+                    if (codeFromScanner != null &&
+                            codeFromScanner.equals(((MainActivity) activity).getActiveHunt().getWaypointList().get(((MainActivity) activity).waypointIndex - 1).getScanCode())) {
+                        if (updateWaypoint()) {
+                            locationListener = null;
+                            MainActivity.setActiveHunt(null);
+                            active = false;
+                            ((MainActivity) activity).initialized = false;
+                            ((MainActivity) activity).navigateToCorrectScreen();
+
+                        } else {
+                            huntProgress();
+                        }
+                    } else {
+
+                    }
+
+
+                } else {
+                    Snackbar.make(rootView, "QR Scan Cancelled", Snackbar.LENGTH_SHORT)
+                            .setAction("Action", null).show();
+                }
+            }
+        } else super.onActivityResult(requestCode, resultCode, data);
+    }
+
     private void updateSensor() {
         float dist = Math.round(getDistanceFromWaypoint(userLocation));
         int colour = 0x0;
@@ -265,8 +314,8 @@ public class PlunderMapFragment extends Fragment implements
     }
 
     private boolean updateWaypoint() {
-        if (currentHunt.getWaypointList().size() >= (waypointIndex + 1)) {
-            Waypoint point = currentHunt.getWaypointList().get(waypointIndex++);
+        if (((MainActivity) activity).getActiveHunt().getWaypointList().size() >= (((MainActivity) activity).waypointIndex + 1)) {
+            Waypoint point = ((MainActivity) activity).getActiveHunt().getWaypointList().get(((MainActivity) activity).waypointIndex++);
             currentWaypoint = point.getCoords();
             waypointClue = point.getDescription();
 
@@ -279,8 +328,8 @@ public class PlunderMapFragment extends Fragment implements
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_place));
             mMap.addMarker(marker);
             */
-            waypointCountText.setText(waypointIndex + "/" + currentHunt.getWaypointList().size());
-            clueText.setText("Clue " + waypointIndex + ": " + waypointClue);
+            waypointCountText.setText(((MainActivity) activity).waypointIndex + "/" + ((MainActivity) activity).getActiveHunt().getWaypointList().size());
+            clueText.setText("Clue " + ((MainActivity) activity).waypointIndex + ": " + waypointClue);
             return false;
         } else {
             return true;
@@ -299,6 +348,20 @@ public class PlunderMapFragment extends Fragment implements
         }
     }
 
+    private void huntProgress() {
+        final View dialogView = rootView.inflate(getContext(), R.layout.dialog_hunt_progress, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setView(dialogView);
+
+        final TextView progressTitle = (TextView) dialogView.findViewById(R.id.progress_title);
+        final TextView progressText = (TextView) dialogView.findViewById(R.id.clue_text);
+
+        progressTitle.setText("Waypoint " + (((MainActivity) activity).waypointIndex - 1) + " completed!");
+        progressText.setText(waypointClue);
+
+        builder.show();
+    }
+
     private String formatTime(long time) {
         int minutes = (int) Math.floor(time / (60*1000));
         int hours = minutes / 60;
@@ -309,16 +372,17 @@ public class PlunderMapFragment extends Fragment implements
 
         return ((days>0) ? (days + "d ") : "") +
                 ((hours>0) ? (hours + "h ") : "") +
-                ((minutes>0) ? (minutes + "m") : "<1m");
+                ((minutes>0) ? (minutes + "m") :
+                 (hours>0) ? "0m" : "<1m");
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
+        active = false;/*
+        outState.putSerializable("hunt", (Serializable) currentHunt);
+        outState.putSerializable("start_time", (Serializable) timeStarted);
+        outState.putInt("waypoint_index", waypointIndex);*/
         super.onSaveInstanceState(outState);
-        active = false;
-        outState.putSerializable("hunt", currentHunt);
-        outState.putSerializable("start_time", timeStarted);
-        outState.putInt("waypoint_index", waypointIndex);
     }
 
     @Override
