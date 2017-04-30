@@ -12,7 +12,15 @@
     android:orientation="vertical"
     tools:context="team18.com.plunder.RegisterActivity">
 
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="0px"
+        android:layout_height="0px"
+        android:focusable="true"
+        android:focusableInTouchMode="true"></android.support.v7.widget.LinearLayoutCompat>
 
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,7 +31,11 @@
         android:hint="Full Name"
         android:textSize="18sp"
         />
+    </android.support.design.widget.TextInputLayout>
 
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <EditText
         android:id="@+id/etEmail"
         android:layout_width="match_parent"
@@ -35,7 +47,11 @@
         android:paddingTop="@dimen/edit_text_padding"
         android:singleLine="true"
         />
+    </android.support.design.widget.TextInputLayout>
 
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -48,7 +64,11 @@
         android:singleLine="true"
         android:fontFamily="sans-serif"
         />
+    </android.support.design.widget.TextInputLayout>
 
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -61,7 +81,11 @@
         android:singleLine="true"
         android:fontFamily="sans-serif"
         />
+    </android.support.design.widget.TextInputLayout>
 
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <EditText
         android:focusable="false"
         android:layout_width="match_parent"
@@ -73,6 +97,7 @@
         android:paddingBottom="@dimen/edit_text_padding"
         android:paddingTop="@dimen/edit_text_padding"
         />
+    </android.support.design.widget.TextInputLayout>
 
     <Button
         android:text="Register"

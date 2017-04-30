@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_login"
     android:layout_width="match_parent"
@@ -12,29 +13,47 @@
     tools:context="team18.com.plunder.LoginActivity"
     android:weightSum="1">
 
-    <EditText
+    <ImageView
+        android:id="@+id/imageView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:ems="10"
-        android:id="@+id/etEmail"
-        android:layout_marginTop="180dp"
-        android:paddingBottom="@dimen/edit_text_padding"
-        android:paddingTop="@dimen/edit_text_padding"
-        android:hint="Email"
-        />
+        android:minHeight="180dp"
+        android:paddingBottom="16dp"
+        app:srcCompat="@mipmap/ic_launcher"
+        android:focusable="true"
+        android:focusableInTouchMode="true"/>
 
-    <EditText
+
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/etPassword"
-        android:paddingBottom="@dimen/edit_text_padding"
-        android:paddingTop="@dimen/edit_text_padding"
-        android:hint="Password"
-        />
+        android:layout_height="wrap_content">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/etEmail"
+            android:paddingBottom="@dimen/edit_text_padding"
+            android:paddingTop="@dimen/edit_text_padding"
+            android:hint="Email"
+            />
+    </android.support.design.widget.TextInputLayout>
 
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:id="@+id/etPassword"
+            android:paddingBottom="@dimen/edit_text_padding"
+            android:paddingTop="@dimen/edit_text_padding"
+            android:hint="Password"
+            />
+    </android.support.design.widget.TextInputLayout>
     <Button
         android:text="Sign In"
         android:layout_width="match_parent"

@@ -247,8 +247,6 @@ public class PlunderMapFragment extends Fragment implements
                         codeFromScanner = data.getStringExtra(BarcodeCaptureActivity.ManualInput);
                     }
 
-
-
                     /*
                     Snackbar.make(rootView, "Scan: " + barcode.displayValue + ", Expected: " + currentHunt.getWaypointList().get(waypointIndex -1).getScanCode(), Snackbar.LENGTH_INDEFINITE)
                             .addCallback(new Snackbar.Callback() {
@@ -273,7 +271,11 @@ public class PlunderMapFragment extends Fragment implements
                             huntProgress();
                         }
                     } else {
+                        final View dialogView = rootView.inflate(getContext(), R.layout.dialog_hunt_bad_code, null);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setView(dialogView);
 
+                        builder.show();
                     }
 
 
