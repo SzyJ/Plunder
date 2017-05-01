@@ -6,8 +6,7 @@
     android:layout_weight="1">
 
 
-    <fragment
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:map="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/hunt_view_map"
@@ -35,9 +34,9 @@
                 android:id="@+id/date_created_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Created on: "
-                android:textSize="30sp"
-                android:textColor="@color/colorAccent"/>
+                android:text="Created On:"
+                android:textColor="@color/colorAccent"
+                android:textSize="30sp" />
 
             <TextView
                 android:id="@+id/created_by_text"

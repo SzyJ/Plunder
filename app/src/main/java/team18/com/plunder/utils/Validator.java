@@ -62,15 +62,28 @@ public class Validator {
             setValid(false);
         }
         return isValid();
-    };
+    }
 
-    public boolean regexValidator(final String pattern, String regex){
+    public boolean validateEvent(EditText name, EditText hunt, EditText startDate, EditText description){
+        EditText[] fields = {name, hunt, startDate, description};
+        for(EditText i:fields){
+            i.setError(null);
+        }
+        setValid(true);
+        if (checkEmpty(fields)) {
+            checkEmpty(fields);
+            setValid(false);
+        }
+        return isValid();
+    }
+
+    private boolean regexValidator(final String pattern, String regex){
         regexPattern = Pattern.compile(regex);
         matcher = regexPattern.matcher(pattern);
         return matcher.matches();
     }
 
-    public boolean checkEmpty(EditText[] fields){
+    private boolean checkEmpty(EditText[] fields){
         boolean isEmpty = false;
 
         for(EditText i : fields){
@@ -83,20 +96,20 @@ public class Validator {
         return isEmpty;
     }
 
-    public boolean ValidateEmail(EditText email) {
+    private boolean ValidateEmail(EditText email) {
         Validator validator = new Validator();
 
-        if (validator.regexValidator(email.getText().toString(), EMAIL_REGEX) == false) {
+        if (!validator.regexValidator(email.getText().toString(), EMAIL_REGEX)) {
             email.setError("Invalid Email");
             return true;
         }
         return false;
     }
 
-    public boolean ValidatePassword(EditText password) {
+    private boolean ValidatePassword(EditText password) {
         Validator validator = new Validator();
 
-        if (validator.regexValidator(password.getText().toString(), PASSWORD_REGEX) == false) {
+        if (!validator.regexValidator(password.getText().toString(), PASSWORD_REGEX)) {
             password.setError("Password must contain one alphabetical character (a-z), " +
                     "one numeric (0-9) and be at least 6 characters long");
             return true;
@@ -104,11 +117,11 @@ public class Validator {
         return false;
     }
 
-    public boolean ValidateSecondPassword(EditText password, EditText password2) {
+    private boolean ValidateSecondPassword(EditText password, EditText password2) {
         String sPassword = password.getText().toString();
         String sPassword2 = password2.getText().toString();
 
-        if (sPassword2.matches(sPassword) == false) {
+        if (!sPassword2.matches(sPassword)) {
             password2.setError("Password doesn't match");
             return true;
         }
@@ -119,7 +132,7 @@ public class Validator {
         return isValid;
     }
 
-    public void setValid(boolean valid) {
+    private void setValid(boolean valid) {
         isValid = valid;
     }
 

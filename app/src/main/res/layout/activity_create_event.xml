@@ -22,6 +22,7 @@
         android:hint="Event Name"
         android:singleLine="true"
         android:textSize="18sp"
+        android:layout_alignParentTop="true"
         />
 
     <EditText
@@ -42,7 +43,7 @@
         android:focusable="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="date"
+        android:inputType="date|textNoSuggestions"
         android:ems="10"
         android:id="@+id/etStartDate"
         android:hint="Start Date"
@@ -64,15 +65,15 @@
         android:scrollHorizontally="false"
         />
 
-    <Spinner
-        android:id="@+id/HuntSpinner"
+
+    <EditText
+        android:focusable="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/edit_text_padding"
-        android:paddingTop="@dimen/edit_text_padding"
-        android:ems="10"
-        android:hint="Choose Hunt"
-        />
+        android:inputType="textNoSuggestions"
+        android:id="@+id/etHunt"
+        android:hint="Select Hunt"
+        android:textSize="18sp" />
 
     <Switch
         android:id="@+id/PrivateSwitch"
@@ -82,8 +83,7 @@
         android:paddingBottom="@dimen/edit_text_padding"
         android:paddingTop="@dimen/edit_text_padding"
         android:text="Private"
-        android:textAppearance="@android:style/TextAppearance.Material.Medium.Inverse"
-        />
+        android:textAppearance="@android:style/TextAppearance.Material.Medium.Inverse" />
 
     <EditText
         android:layout_width="match_parent"
@@ -98,5 +98,17 @@
         android:visibility="invisible"
         android:fontFamily="sans-serif"
         />
+
+    <Button
+        android:id="@+id/place_picker_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pick a starting location" />
+
+    <Button
+        android:id="@+id/bSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit" />
 
 </LinearLayout>
