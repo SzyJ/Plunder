@@ -45,6 +45,7 @@ import team18.com.plunder.R;
 import team18.com.plunder.utils.CustomAdapter;
 import team18.com.plunder.utils.Hunt;
 import team18.com.plunder.utils.HuntCardData;
+import team18.com.plunder.utils.VariableBank;
 
 import static com.google.android.gms.location.LocationRequest.create;
 
@@ -73,7 +74,7 @@ public class ManHuntFragment extends android.support.v4.app.Fragment implements 
 
         dataList = new ArrayList<>();
 
-        loadData("590389212770f");
+        loadData(VariableBank.USER_ID);
 
         gridLayoutManager = new GridLayoutManager(getContext(), 1);
         recyclerView.setLayoutManager(gridLayoutManager);
@@ -90,7 +91,7 @@ public class ManHuntFragment extends android.support.v4.app.Fragment implements 
                 final View dialogView = layInf.inflate(R.layout.dialog_create_hunt, null);
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setTitle("Create New Hunt");
-                builder.setMessage("Some Text describing what a hunt is. Please give your new hunt a name and proceed to choose waypoints for it");
+                builder.setMessage("Please give your new hunt a name and proceed to choose waypoints for it");
                 builder.setView(dialogView);
 
                 final EditText huntNameInput = (EditText) dialogView.findViewById(R.id.hunt_name_input);
@@ -102,7 +103,7 @@ public class ManHuntFragment extends android.support.v4.app.Fragment implements 
                                 if (!huntName.isEmpty()) {
                                     dialog.dismiss();
                                     Intent intent = new Intent(getActivity(), CreateHunt.class);
-                                    intent.putExtra("new_hunt_obj", new Hunt(huntName));
+                                    intent.putExtra("new_hunt_obj", new Hunt(huntName, false));
                                     startActivity(intent);
                                 } else {
                                     huntNameInput.setError("Hunt name cannot be empty!");
@@ -145,18 +146,11 @@ public class ManHuntFragment extends android.support.v4.app.Fragment implements 
                 try {
                     Response response = client.newCall(request).execute();
 
-                    /*
-                    CharSequence text = "Trying Connection";
-                    int duration = Toast.LENGTH_SHORT;
-
-                    Toast toast = Toast.makeText(getContext(), text, duration);
-                    toast.show();*/
-
                     JSONArray array = new JSONArray(response.body().string());
 
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject object = array.getJSONObject(i);
-                        HuntCardData data = new HuntCardData(object.getString("hunt_id"), object.getString("hunt_name"), new Date().getTime());
+                        HuntCardData data = new HuntCardData(object.getString("hunt_id"), object.getString("hunt_name"), (long) Integer.parseInt(object.getString("date_created")));
 
                         dataList.add(data);
                     }

@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:layout_marginTop="8dp">
 
+    <TextView
+        android:id="@+id/input_cue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter the 5 digit code: "
+        android:layout_gravity="center"
+        android:textSize="20dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"/>
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp">
-
+        android:layout_height="wrap_content">
         <AutoCompleteTextView
             android:id="@+id/manual_input_field"
             android:layout_width="match_parent"
@@ -19,7 +27,6 @@
             android:inputType="number"
             android:cursorVisible="true"
             android:maxLines="1"
-            android:layout_gravity="center"
             android:singleLine="true" />
 
     </android.support.design.widget.TextInputLayout>

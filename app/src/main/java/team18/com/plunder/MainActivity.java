@@ -16,8 +16,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.SupportMapFragment;
 
@@ -32,6 +34,7 @@ import team18.com.plunder.team18.com.fragments.PlunderMapFragment;
 import team18.com.plunder.team18.com.fragments.SearchFragment;
 import team18.com.plunder.team18.com.fragments.SettingsFrament;
 import team18.com.plunder.utils.Hunt;
+import team18.com.plunder.utils.VariableBank;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -68,7 +71,7 @@ public class MainActivity extends AppCompatActivity
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         if (activePlunderMapFragment != null) {
-            getSupportFragmentManager().putFragment(outState, "plunder_map_fragment", activePlunderMapFragment);
+            //getSupportFragmentManager().putFragment(outState, "plunder_map_fragment", activePlunderMapFragment);
         }
     }
 
@@ -84,6 +87,12 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        NavigationView inflater = (NavigationView) findViewById(R.id.nav_view);
+
+        ((TextView) inflater.getHeaderView(0).findViewById(R.id.user_name)).setText(VariableBank.NAME);
+        ((TextView) inflater.getHeaderView(0).findViewById(R.id.user_email)).setText(VariableBank.EMAIL);
+
 
         if (savedInstanceState != null) {
             activePlunderMapFragment = getSupportFragmentManager().getFragment(savedInstanceState, "plunder_map_fragment");

@@ -21,16 +21,17 @@ public class Hunt implements Serializable, Iterator<Waypoint> {
     private List<Waypoint> wpList;
     private Date dateCreated;
     private String author;
-    private long completionTime;
 
-    public Hunt(String name) {
+    public Hunt(String name, boolean fromDB) {
+        if (fromDB) {
 
-        this.name = name;
-        wpList = new ArrayList<Waypoint>();
-        dateCreated = new Date();
-        author = "Szymon"; // replace with GetCurrentUser().getName(); or something
+        } else {
+            this.name = name;
+            wpList = new ArrayList<Waypoint>();
+            dateCreated = new Date();
+            author = VariableBank.USER_ID; // replace with GetCurrentUser().getName(); or something
+        }
 
-        completionTime = -1; //(DataExistsInServer) : completionTime = -1 ? completionTime = GetDataFromServer();
     }
 
     public void addWaypoint(Waypoint newPoint) { wpList.add(newPoint); }
@@ -44,11 +45,9 @@ public class Hunt implements Serializable, Iterator<Waypoint> {
 
     public String getAuthor() { return author; }
     public Date getDateCreated() { return dateCreated; }
-    public long getCompletionTime() { return completionTime; }
 
     public void resetHunt() {
         dateCreated = new Date();
-        completionTime = -1;
         wpList.clear();
     }
 

@@ -1,10 +1,13 @@
 package team18.com.plunder;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -34,6 +37,16 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 import team18.com.plunder.utils.Hunt;
 import team18.com.plunder.utils.MapUtil;
 import team18.com.plunder.utils.Waypoint;
@@ -43,6 +56,8 @@ import team18.com.plunder.utils.Waypoint;
  */
 
 public class CreateHunt extends AppCompatActivity implements OnMapReadyCallback {
+
+    private String ADD_HUNT_URL = "http://homepages.cs.ncl.ac.uk/2016-17/csc2022_team18/PHP/add_hunt.php";
 
     private final float DEFAULT_CAMERA_ZOOM = 15f;
 
@@ -153,11 +168,8 @@ public class CreateHunt extends AppCompatActivity implements OnMapReadyCallback 
                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
                     hunt.addWaypoint(new Waypoint(selectedWaypoint, descriptionText));
-                    //CreateHunt.super.onBackPressed();
 
-                    Intent intent = new Intent(getApplicationContext(), ViewHunt.class);
-                    intent.putExtra("hunt_obj", hunt);
-                    startActivity(intent);
+                    uploadHunt(view);
                 }
             }
         });
@@ -332,4 +344,115 @@ public class CreateHunt extends AppCompatActivity implements OnMapReadyCallback 
         );
         alertDialog.show();
     }
+
+    private void uploadHunt(final View view) {
+        AsyncTask<Integer, Void, Void> task = new AsyncTask<Integer, Void, Void>() {
+            /*
+            ProgressDialog dialog = ProgressDialog.show(v.getContext(), "",
+                    "Please wait", true);*/
+            @Override
+            protected Void doInBackground(Integer... params) {
+
+                //dialog.show();
+
+                StringBuilder latitudeBuilder = new StringBuilder();
+                StringBuilder longitudeBuilder = new StringBuilder();
+                StringBuilder scanCodeBuilder = new StringBuilder();
+                StringBuilder clueBuilder = new StringBuilder();
+
+                String latitude = "";
+                String longitude = "";
+                String scanCode = "";
+                String clue = "";
+
+
+                String splitter = "";
+
+                for (Waypoint wp : hunt.getWaypointList()) {
+                    latitude += splitter;
+                    longitude += splitter;
+                    scanCode += splitter;
+                    clue += splitter;
+
+                    latitude += String.format("%.5f", wp.getCoords().latitude);
+                    longitude += String.format("%.5f", wp.getCoords().longitude);
+                    scanCode += wp.getScanCode();
+                    clue += wp.getDescription();
+
+                    splitter = "" + ((char)007);
+                }
+
+
+
+                OkHttpClient client = new OkHttpClient();
+                RequestBody formBody = new FormBody.Builder()
+                        .add("admin", "59065c66d596c")
+                        .add("name", huntName)
+                        .add("latitude", latitude)
+                        .add("longitude", longitude)
+                        .add("scan_code", scanCode)
+                        .add("clue", clue)
+
+                        .build();
+                Request request = new Request.Builder()
+                        .url(ADD_HUNT_URL)
+                        .post(formBody)
+                        .build();
+
+
+                //"lat:" + latitude + "| lon:" + longitude + "| scan:" + scanCode + "| clue" + clue
+
+
+                try {
+                    okhttp3.Response response = client.newCall(request).execute();
+
+                    //Snackbar.make(v,response.body().string() , Snackbar.LENGTH_INDEFINITE)
+                    //.setAction("Action", null).show();
+
+                    System.out.println("Response: " + response.body().string());
+                    System.out.println("admin: 59065c66d596c");
+                    System.out.println("name: " + huntName);
+                    System.out.println("latitude: " + latitude);
+                    System.out.println("longitude: " + longitude);
+                    System.out.println("scan_code: " + scanCode);
+                    System.out.println("clue: " + clue);
+
+
+                    JSONObject obj = new JSONObject(response.body().string());
+                    Boolean success = obj.getBoolean("success");
+                    String huntID = obj.getString("hunt_id");
+
+                    if (success) {
+                        Intent intent = new Intent(CreateHunt.this, ViewHunt.class);
+                        intent.putExtra("hunt_obj", hunt);
+                        startActivity(intent);
+                    } else {
+                        //warning.show();
+                        Snackbar.make(view, "An error has occured, Please try again later", Snackbar.LENGTH_SHORT)
+                                .setAction("Action", null).show();
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    // End of content reached
+                    e.printStackTrace();
+                } catch (IllegalStateException ise) {
+                    ise.printStackTrace();
+                    Intent intent = new Intent(CreateHunt.this, ViewHunt.class);
+                    intent.putExtra("hunt_obj", hunt);
+                    startActivity(intent);
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                //dialog.hide();
+            }
+        };
+
+        task.execute();
+    }
+
 }

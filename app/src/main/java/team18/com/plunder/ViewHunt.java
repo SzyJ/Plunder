@@ -32,7 +32,6 @@ public class ViewHunt extends AppCompatActivity implements OnMapReadyCallback {
     private TextView dateText;
     private TextView authorText;
     private TextView wpCountText;
-    private TextView completionTimeText;
 
     private Button backButton;
     private Button remakeButton;
@@ -88,7 +87,6 @@ public class ViewHunt extends AppCompatActivity implements OnMapReadyCallback {
         dateText = (TextView) findViewById(R.id.date_created_text);
         authorText  = (TextView) findViewById(R.id.created_by_text);
         wpCountText = (TextView) findViewById(R.id.waypoint_count_text);
-        completionTimeText = (TextView) findViewById(R.id.completion_time_text);
 
         backButton = (Button) findViewById(R.id.hunt_view_back_btn);
         remakeButton = (Button) findViewById(R.id.remake_hunt_btn);
@@ -99,11 +97,6 @@ public class ViewHunt extends AppCompatActivity implements OnMapReadyCallback {
         dateText.append("" + df.format(hunt.getDateCreated()));
         authorText.append("" + hunt.getAuthor());
         wpCountText.setText("" + waypointCount + " " + "waypoint" + ((waypointCount > 1) ? "s" : ""));
-        if (hunt.getCompletionTime() > 0) {
-            completionTimeText.append("" + hunt.getCompletionTime());
-        } else {
-            completionTimeText.append("Hunt not yet tested");
-        }
     }
 
     @Override
