@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/date_created_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:text="Starts on: "
+                android:textColor="@color/colorAccent"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/event_created_by_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:text="Created by: "
+                android:textColor="@color/colorAccent"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/event_waypoint_count_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:text="Waypoint Count"
+                android:textSize="40sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                >
+
+                <Button
+                    android:id="@+id/event_view_back_btn"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_weight="1"
+                    android:text="Back"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/start_event_btn"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_weight="1"
+                    android:text="Start Event"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </LinearLayout>
+

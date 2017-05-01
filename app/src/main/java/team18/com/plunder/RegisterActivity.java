@@ -147,7 +147,7 @@ public class RegisterActivity extends AppCompatActivity {
                 myCalendar.set(Calendar.YEAR, year);
                 myCalendar.set(Calendar.MONTH, monthOfYear);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                String myFormat = "dd/mm/yyyy"; //In which you need put here
+                String myFormat = "dd/MM/yyyy"; //In which you need put here
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.UK);
 
                 etBirthDate.setText(sdf.format(myCalendar.getTime()));
