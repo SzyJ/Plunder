@@ -172,10 +172,11 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_settings) {
             currentScreenIndex = NAV_DRAWER_SETTINGS;
             navigateToCorrectScreen();
+            /*
         } else if (id == R.id.nav_satellite) {
             return true;
         } else if (id == R.id.nav_night_mode) {
-            return true;
+            return true;*/
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

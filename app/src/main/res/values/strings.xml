@@ -9,9 +9,9 @@
     <!-- Fragment Titles -->
     <string name="search_fragment_title">Plunder Search</string>
     <string name="map_fragment_title">Plunder</string>
-    <string name="current_hunts_fragment_title">Current Hunts</string>
+    <string name="current_hunts_fragment_title">Current Plunders</string>
     <string name="man_hunts_fragment_title">Manage Hunts</string>
-    <string name="man_events_fragment_title">Manage Events</string>
+    <string name="man_events_fragment_title">Manage Plunders</string>
     <string name="settings_fragment_title">Settings</string>
 
     <!-- Strings related to login -->

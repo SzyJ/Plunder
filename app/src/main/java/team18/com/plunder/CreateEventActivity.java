@@ -46,6 +46,7 @@ import okhttp3.Response;
 import team18.com.plunder.utils.Event;
 import team18.com.plunder.utils.MapUtil;
 import team18.com.plunder.utils.Validator;
+import team18.com.plunder.utils.VariableBank;
 
 public class CreateEventActivity extends AppCompatActivity implements OnItemClickListener{
 
@@ -71,6 +72,8 @@ public class CreateEventActivity extends AppCompatActivity implements OnItemClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
 
+
+
         final EditText etEventName = (EditText) findViewById(R.id.etEventName);
         final EditText etDescription = (EditText) findViewById(R.id.etDescription);
         final EditText etStartDate = (EditText) findViewById(R.id.etStartDate);
@@ -79,12 +82,15 @@ public class CreateEventActivity extends AppCompatActivity implements OnItemClic
         etHunt = (EditText) findViewById(R.id.etHunt);
         final Event event = (Event) getIntent().getExtras().getSerializable("new_event_obj");
 
+
+
         final CompoundButton PrivateSwitch = (CompoundButton) findViewById(R.id.PrivateSwitch);
         placePickerButton = (Button) findViewById(R.id.place_picker_button);
         final Button bSubmit = (Button) findViewById(R.id.bSubmit);
 
         etEventName.setText(event.getName());
 
+        setTitle("New Plunder: " + event.getName());
         final DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -128,7 +134,7 @@ public class CreateEventActivity extends AppCompatActivity implements OnItemClic
             }
         });
 
-        loadData("59065529979bf");
+        loadData(VariableBank.USER_ID);
         huntList = new ListPopupWindow(CreateEventActivity.this);
         huntList.setAdapter(new ArrayAdapter<>(CreateEventActivity.this, R.layout.list_item, hunt_names));
         huntList.setAnchorView(etHunt);

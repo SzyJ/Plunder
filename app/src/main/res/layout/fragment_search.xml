@@ -11,4 +11,14 @@
         android:text="Search for a Hunt..."
         android:ems="10"
         android:id="@+id/huntSearch" />
+
+    <TextView
+        android:text="Search screen is Work in progress. Please check back later!"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="30dp"
+        android:textColor="@color/colorAccent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView4" />
 </FrameLayout>

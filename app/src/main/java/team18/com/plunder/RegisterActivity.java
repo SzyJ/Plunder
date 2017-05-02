@@ -26,6 +26,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import okhttp3.FormBody;
@@ -39,6 +40,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     private final String REGISTER_URL = "http://homepages.cs.ncl.ac.uk/2016-17/csc2022_team18/PHP/register.php";
     Calendar myCalendar = Calendar.getInstance();
+
+    private Date date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +69,7 @@ public class RegisterActivity extends AppCompatActivity {
                         final String birthDate = etBirthDate.getText().toString();
                         final View view = v;
 
-                        Snackbar.make(view, "n:" + name + " e:" + email + " p:" + password + " d:" + birthDate, Snackbar.LENGTH_INDEFINITE)
-                                .setAction("Action", null).show();
+
                         /*
                         final AlertDialog warning = new AlertDialog.Builder(RegisterActivity.this)
                                 .setMessage("n:" + name + " e:" + email + " p:" + password + " d:" + birthDate)
@@ -87,7 +89,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 RequestBody formBody = new FormBody.Builder()
                                         .add("name", name)
                                         .add("email", email)
-                                        .add("birthDate", birthDate)
+                                        .add("birthDate", ("" + date.getTime()))
                                         .add("password", password)
                                         .build();
                                 Request request = new Request.Builder()
@@ -102,9 +104,8 @@ public class RegisterActivity extends AppCompatActivity {
                                     Boolean success = obj.getBoolean("success");
 
                                     if (success) {
-                                        Intent MainIntent = new Intent(RegisterActivity.this, MainActivity.class);
-                                        MainIntent.putExtra("nav_index", MainActivity.NAV_DRAWER_MAP);
-                                        RegisterActivity.this.startActivity(MainIntent);
+                                        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                                        startActivity(intent);
                                     } else {
                                         //warning.show();
                                         Snackbar.make(view, "An error has occured, Please try again later", Snackbar.LENGTH_SHORT)
@@ -147,11 +148,14 @@ public class RegisterActivity extends AppCompatActivity {
                 myCalendar.set(Calendar.YEAR, year);
                 myCalendar.set(Calendar.MONTH, monthOfYear);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+
                 String myFormat = "dd/MM/yyyy"; //In which you need put here
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.UK);
 
                 etBirthDate.setText(sdf.format(myCalendar.getTime()));
 
+                date = myCalendar.getTime();
 
 
             }

@@ -5,7 +5,7 @@
         <item
             android:id="@+id/nav_search"
             android:icon="@drawable/ic_menu_search"
-            android:title="Search for Event" />
+            android:title="Search for Plunders" />
         <item
             android:id="@+id/nav_map"
             android:icon="@drawable/ic_menu_map"
@@ -13,7 +13,7 @@
         <item
             android:id="@+id/nav_current"
             android:icon="@drawable/ic_menu_current_hunts"
-            android:title="Current Hunts" />
+            android:title="Current Plunders" />
         <item
             android:id="@+id/nav_manage_hunt"
             android:icon="@drawable/ic_menu_pie_chart"
@@ -21,13 +21,14 @@
         <item
             android:id="@+id/nav_manage_event"
             android:icon="@drawable/ic_menu_plus"
-            android:title="Manage Events" />
+            android:title="Manage Plunders" />
         <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_menu_settings"
             android:title="Settings" />
     </group>
 
+    <!--
     <item android:title="Quick Settings">
         <menu>
             <item
@@ -40,5 +41,5 @@
                 android:title="Night Mode" />
         </menu>
     </item>
-
+    -->
 </menu>

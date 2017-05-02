@@ -36,13 +36,13 @@ public class ManEventsFragment extends android.support.v4.app.Fragment implement
 
                 final View dialogView = layInf.inflate(R.layout.dialog_create_event, null);
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("Create New Event");
-                builder.setMessage("Please give your new event a name and proceed to make it it");
+                builder.setTitle("Create New Plunder");
+                builder.setMessage("Please give your new plunder a name and proceed to make it it");
                 builder.setView(dialogView);
 
                 final EditText eventNameInput = (EditText) dialogView.findViewById(R.id.event_name_input);
 
-                builder.setPositiveButton("Create Event",
+                builder.setPositiveButton("Create Plunder",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 String eventName = eventNameInput.getText().toString();

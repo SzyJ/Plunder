@@ -19,7 +19,7 @@
         android:ems="10"
         android:id="@+id/etEventName"
         android:paddingBottom="@dimen/edit_text_padding"
-        android:hint="Event Name"
+        android:hint="Plunder Name"
         android:singleLine="true"
         android:textSize="18sp"
         android:layout_alignParentTop="true"

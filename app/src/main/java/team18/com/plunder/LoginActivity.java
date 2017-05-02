@@ -80,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         AsyncTask<Integer, Void, Void> task = new AsyncTask<Integer, Void, Void>() {
                             ProgressDialog dialog = ProgressDialog.show(view.getContext(), "",
-                                    "Loging you in...", true);
+                                    "Logging you in...", true);
                             @Override
                             protected Void doInBackground(Integer... params) {
 
