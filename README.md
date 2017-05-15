@@ -22,6 +22,7 @@ Code written by:
   - Szymon Jackiewicz   |   Programing Team Leader, Front-End Designer and developer
   - Yathartha Sharma    |   Research and back-end programmer
   - Guillermo Chibas    |   Overall Team Leader and back-end programmer
+  - Harry Jennings  |   Flex
 
 Team Members:
   - Alana Horada    |   Lead of Documentation
@@ -29,4 +30,3 @@ Team Members:
   - Dalton Yates    |   Deputy Team Leader
   - Edward Jacobs   |   Promotional Website Designer
   - Haaris Qureshi  |   Lead of Design
-  - Harry Jennings  |   Flex
