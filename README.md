@@ -1,7 +1,10 @@
 # PlunderProject
 CSC2022 Team Andorid app developement project. 2016-2017 Team_18
 
-"Plunder"
+Plunder
+
+![Alt text](/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png?raw=true "Plunder")
+
 
 ** App is not in a complete finished state **
 ** The developement on the project is currently on hold **
