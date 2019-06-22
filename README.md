@@ -1,10 +1,11 @@
 # Plunder
 ### Welcome to Plunder!
+Explore the world with user created hunts!
+
+Compete in Plunders against others for rewards and fun!
+
 ![Plunder_Logo](/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png?raw=true "Plunder")
 
-**Explore the world with user created hunts!**
-
-**Compete in Plunders against others for rewards and fun!**
 
 The backend for the app can be found here: [Plunder_Backend](https://github.com/yatharthasharma/Plunder_Backend)
 
