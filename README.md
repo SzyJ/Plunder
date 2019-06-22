@@ -36,9 +36,9 @@ Allow everyone to experience what's best!
 ## About
 This was a Newcastle Univeristy year-long Andorid app developement team project.
 We have set out to design an app to allow anyone to create treasure hunts for any other user of the app.
-The original concept was designed with new univerity students in mind to allow them to follow user created treasure hunt in order to femiliarise themselves with the University campus and to find new areas in a new city.
+The original concept was designed with new university students in mind to allow them to follow user created treasure hunt in order to femiliarise themselves with the University campus and to find new areas in a new city.
 
-## Brought to you by
+### Credits
 Code written by:
   - [Szymon Jackiewicz](https://github.com/SzyJ)   |   Programing Team Leader, Front-End Designer and developer
   - [Yathartha Sharma](https://github.com/yatharthasharma)    |   Research and back-end programmer
