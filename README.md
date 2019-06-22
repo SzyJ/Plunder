@@ -1,5 +1,4 @@
-# Plunder
-### Welcome to Plunder!
+# Welcome to Plunder!
 Explore the world with user created hunts!
 
 Compete in Plunders against others for rewards and fun!
